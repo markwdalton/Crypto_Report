@@ -1,3 +1,4 @@
+import argparse
 import csv
 import datetime
 from geckoreport import GeckoReport
@@ -8,6 +9,16 @@ logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    '--pages', '-p', type=int, default=7,
+    help='Number of pages of coins to retrieve from Coingecko.'
+    )
+args = parser.parse_args()
+
+# Number of 250 coin pages to include in report (0 for all available)
+page_limit = args.pages
+
 # Directory for report output
 report_directory = 'reports'
 
@@ -15,8 +26,6 @@ if not os.path.exists(report_directory):
     logger.info('Creating report directory.')
     os.makedirs(report_directory)
 
-# Number of 250 coin pages to include in report (0 for all available)
-page_limit = 7
 
 if __name__ == '__main__':
     gecko_report = GeckoReport()
