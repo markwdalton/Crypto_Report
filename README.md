@@ -12,12 +12,20 @@
    3. Install Google News API
        pip3 install GoogleNews --user
 
-
    4. Run with Python 3
        python3 generate_report.py
 
    5. Run collecting the news for a given keywords/coins:
        python3 collect-google-news.py --coin AMPL --keyword Decentralized --duration 7d
+
+       ** It seems to be picking up too much noise.
+        * Generic query would be: 
+             Decentralized Finance news when:1d
+       ** Stores to file, but also prints it out in a easy to read way using pprint (Pretty Print).
+          python3 collect-google-news.py --duration 24h
+          # Also for now I disabled the usage below of the keyword and coin as it was
+            not helping, and lots of false positive news.
+        
 
    Example:
    Collecting Google news:

@@ -3,10 +3,11 @@ import csv
 import datetime
 import logging
 import os
+import pprint
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.ERROR)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--keyword', '-k', type=str, default='crypto', help='A additional keyword default is crypto could use DeFi or similar.')
@@ -34,8 +35,8 @@ if not os.path.exists(report_directory):
 # search for the best matching articles that mention crypto
 # and Decenteralized or DeFi, and over the past 24 hours 
 #
-search = gn.search('{keyword} {coin}', when=duration) 
-#  search = gn.search('Decenteralized finance AMPL', when = '24h')
+# search = gn.search('Decentralized finance {keyword} +{coin}', when=duration) 
+search = gn.search('Decenteralized finance news', when = duration)
 
 #  +Decentralized OR +DeFi', when = '6m')
 
@@ -68,10 +69,13 @@ google_news_fields = [
    'sub_articles'
 ]
 
+output=search['entries']
+pprint.pprint(output)
+
 with open(report_file, 'w', newline='') as csv_file:
    csv_writer = csv.DictWriter(csv_file, fieldnames=google_news_fields)
 
    logger.info('Writing data to csv file.')
-   for coin in search['entries']:
-      csv_writer.writerow(coin)
-      # print(coin)
+   for project in search['entries']:
+      csv_writer.writerow(project)
+      ## print(project.title,project.link)
